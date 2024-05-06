@@ -1,0 +1,13 @@
+{
+  "name": "oboardgame-back",
+  "version": "1.0.0",
+  "description": "Back-end for oboardgame app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "resetDB": "psql -U oboardgame -d oboardgame -f data/create_table.sql && psql -U oboardgame -d oboardgame -f data/seeding.sql",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
