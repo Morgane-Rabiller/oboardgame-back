@@ -17,3 +17,8 @@ Boardgame.belongsToMany(User, {
     otherKey: "user_id",
     timestamps: false
 });
+
+module.exports = {
+    User, 
+    Boardgame
+};
