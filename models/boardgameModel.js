@@ -46,6 +46,7 @@ const Boardgame = db.define(
         },
     },
     {
+        tableName: "boardgame",
         createdAt: "created_at",
         updatedAt: "updated_at",
     }
