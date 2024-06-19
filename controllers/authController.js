@@ -29,6 +29,20 @@ const authController = {
             console.log(error);
             res.status(401).json({ message: "Echec de la connexion" });
         }
+    },
+    authorize: (req, res, next) => {
+        try {
+            const header = req.headers["authorization"];
+            
+            const token = header.split(" ")[1];
+
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+            req.user = decodedToken.user;
+            next();
+        } catch (error) {
+            return res.status(401).json({ message: "Pas d'autorisation token", erreur: error });
+        }
     }
 }
 

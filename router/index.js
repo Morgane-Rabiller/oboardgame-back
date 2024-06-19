@@ -13,6 +13,8 @@ router.post("/registerUser", userController.create);
 router.put("/updatePassword/:id", userController.updatePassword);
 
 //BOARDGAME
-router.get("/boardgames", boardgameController.read);
+router.get("/boardgame", boardgameController.read);
+
+// router.get("/boardgame/create", authController.authorize, boardgameController.searchOneBoardgame);
 
 module.exports = router;
