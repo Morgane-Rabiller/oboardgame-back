@@ -65,11 +65,24 @@ const boardgameController = {
 
     },
 
+    // Création du jeu dans la base de données
     create: async (req, res) => {
         try {
+            const { name, ...fieldToCreate } = req.body;
+            const sanitizedName = sanitizeHtml(name, defaultOptionsSanitize);
+            const boardgame = await Boardgame.findOne({ where: Sequelize.where(Sequelize.fn('lower', Sequelize.col('name')), Sequelize.fn('lower', sanitizedName)) });
 
-            return res.status(200).json({ message: "Création du jeu" });
+            // Si le jeu existe déjà dans la base de données, on ne le crée pas une deuxième fois.
+            if(boardgame) {
+                return res.status(401).json({ message: "Ce jeu est déjà présent dans la base de données, tu ne peux pas créer de doublon !"})
+            }
+            // Si il n'est pas dans la base de données, on le crée
+            const newBoardgame = await Boardgame.create(fieldToCreate);
+            
+            return res.status(201).json({ message: "Jeu crée", newBoardgame });
         } catch (error) {
+            console.log(error);
+            return res.status(401).json({ message: "Jeu non crée" });
             
         }
     },
