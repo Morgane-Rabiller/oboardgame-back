@@ -63,6 +63,21 @@ const libraryController = {
             console.log(error);
             return res.status(401).json({ message: "Impossible de modifier le jeu"})
         }
+    },
+
+    delete: async (req, res) => {
+        try {
+            
+            const userId = parseInt(req.user.id, 10);
+            const boardgameId = parseInt(req.params.id, 10);
+            const boardgameToDelete = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }});
+            
+            await boardgameToDelete.destroy();
+            return res.status(201).json("Jeu supprimé de la bibliothèque");
+        } catch (error) {
+            console.log(errror);
+            return res.status(401).json({ message: "Echec de la supprission" });
+        }
     }
 }
 

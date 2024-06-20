@@ -19,7 +19,7 @@ router.post("/boardgame/create", authController.authorize, boardgameController.c
 
 // LIBRARY
 router.post("/library/addBoardgame", authController.authorize, libraryController.addBoardgame);
-
 router.put("/library/update/:id", authController.authorize, libraryController.update);
+router.delete("/library/delete/:id", authController.authorize, libraryController.delete);
 
 module.exports = router;
