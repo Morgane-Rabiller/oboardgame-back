@@ -3,6 +3,7 @@ const router = express.Router();
 const authController =require("../controllers/authController.js");
 const userController =require("../controllers/userController.js");
 const boardgameController =require("../controllers/boardgameController.js");
+const libraryController = require("../controllers/libraryController.js");
 
 //LOGIN
 router.post("/login", authController.login);
@@ -14,10 +15,11 @@ router.put("/updatePassword/:id", userController.updatePassword);
 
 //BOARDGAME
 router.get("/boardgame", boardgameController.read);
-
-router.post("/boardgame/addBoardgame", authController.authorize, boardgameController.addBoardgameInLibrary);
-
 router.post("/boardgame/create", authController.authorize, boardgameController.create);
-router.put("/boardgame/update/:id", authController.authorize, boardgameController.update);
+
+// LIBRARY
+router.post("/library/addBoardgame", authController.authorize, libraryController.addBoardgame);
+
+router.put("/library/update/:id", authController.authorize, libraryController.update);
 
 module.exports = router;
