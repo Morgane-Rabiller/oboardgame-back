@@ -8,6 +8,16 @@ const defaultOptionsSanitize = {
 };
 
 const libraryController = {
+    read: async (req, res) => {
+        try {
+            const userId = parseInt(req.user.id, 10);
+            const boardgamesInLibrary = await UserBoardgame.findAll({ where: { user_id: userId }});
+    
+            return res.status(200).json({ message: "Les jeux de ta bibliothèque !", data: boardgamesInLibrary });
+        } catch (error) {
+            return res.status(401).json({ message: "Tu n'as pas encore de jeux dans ta bibliothèque" });
+        }
+    },
 
     // Ajouter un jeu de société à sa bibliothèque si il est déjà existant dans la base de données
     addBoardgame: async (req, res) => {
