@@ -26,7 +26,7 @@ const boardgameController = {
     },
 
     // Ajouter un jeu de société à sa bibliothèque si il est déjà existant dans la base de données
-    addBoardgame: async (req, res) => {
+    addBoardgameInLibrary: async (req, res) => {
         try {
             const { name } = req.body;
             const sanitizedName = sanitizeHtml(name, defaultOptionsSanitize);
@@ -54,7 +54,9 @@ const boardgameController = {
                 });
                 return res.status(201).json({ message: "Jeu existant dans la base de données et bien ajouté à ta librairie", newUserBoardgame });
             } else {
-                return res.status(200).json({ message: "Jeu inexistant dans la base de données mais tu peux l'ajouter en spécifiant ses données" });
+                return res.status(
+                    
+                ).json({ message: "Jeu inexistant dans la base de données mais tu peux l'ajouter en spécifiant ses données" });
             }
         } catch (error) {
             console.log(error);
