@@ -8,6 +8,7 @@ const defaultOptionsSanitize = {
 };
 
 const libraryController = {
+    // Voir sa bibliothèque
     read: async (req, res) => {
         try {
             const userId = parseInt(req.user.id, 10);
@@ -59,7 +60,7 @@ const libraryController = {
         
     },
 
-    // Modification des champs d'un des jeux d'une bibliothèque utilisateur
+    // Modification des champs d'un des jeux de sa bibliothèque
     update: async (req, res) => {
         try {
             const { ...fieldToUpdate } = req.body;
@@ -75,9 +76,9 @@ const libraryController = {
         }
     },
 
+    // Supprimer un jeu de sa bibliothèque
     delete: async (req, res) => {
         try {
-            
             const userId = parseInt(req.user.id, 10);
             const boardgameId = parseInt(req.params.id, 10);
             const boardgameToDelete = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }});
@@ -85,7 +86,7 @@ const libraryController = {
             await boardgameToDelete.destroy();
             return res.status(201).json("Jeu supprimé de la bibliothèque");
         } catch (error) {
-            console.log(errror);
+            console.log(error);
             return res.status(401).json({ message: "Echec de la supprission" });
         }
     }
