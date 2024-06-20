@@ -4,7 +4,7 @@ const db = require("../db/db.js");
 const sequelize = require("sequelize");
 const { DataTypes } = sequelize;
 
-const user_boardgame = db.define("user_boardgame", {
+const UserBoardgame = db.define("user_boardgame", {
     user_id: {
         type: DataTypes.INTEGER,
         references: {
@@ -46,7 +46,7 @@ const user_boardgame = db.define("user_boardgame", {
 // Association User -> Boardgame
 User.belongsToMany(Boardgame, {
     as: "boardgame",
-    through: user_boardgame,
+    through: UserBoardgame,
     foreignKey: "user_id",
     otherKey: "boardgame_id",
     timestamps: false
@@ -54,7 +54,7 @@ User.belongsToMany(Boardgame, {
 
 Boardgame.belongsToMany(User, {
     as: "user",
-    through: user_boardgame,
+    through: UserBoardgame,
     foreignKey: "boardgame_id",
     otherKey: "user_id",
     timestamps: false
@@ -63,5 +63,5 @@ Boardgame.belongsToMany(User, {
 module.exports = {
     User, 
     Boardgame,
-    user_boardgame
+    UserBoardgame
 };

@@ -15,6 +15,6 @@ router.put("/updatePassword/:id", userController.updatePassword);
 //BOARDGAME
 router.get("/boardgame", boardgameController.read);
 
-// router.get("/boardgame/create", authController.authorize, boardgameController.searchOneBoardgame);
+router.get("/boardgame/addBoardgame", authController.authorize, boardgameController.addBoardgame);
 
 module.exports = router;
