@@ -45,6 +45,23 @@ const boardgameController = {
             return res.status(401).json({ message: "Jeu non crée" });
         }
     },
+
+    update: async (req, res) => {
+        try {
+            const { ...fieldToUpdate } = req.body;
+            const boardgameId = parseInt(req.params.id, 10);
+            const boardgameToUpdate = await Boardgame.findByPk(boardgameId);
+            if(!boardgameToUpdate) {
+                return res.status(401).json({ message: "Pas de jeu existant avec cet identifiant" });
+            }
+
+            await boardgameToUpdate.update(fieldToUpdate);
+            return res.status(201).json({ message: "Mise à jour du jeu effectuée", boardgameToUpdate });
+        } catch (error) {
+            console.log(error);
+            return res.status(401).json({ message: "Echec de la mise à jour" });
+        }
+    },
     
     // Suppression d'un jeu de la base de données globale
     delete: async (req, res) => {

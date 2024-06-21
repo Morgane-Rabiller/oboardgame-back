@@ -10,12 +10,12 @@ router.post("/login", authController.login);
 
 // USER
 router.post("/registerUser", userController.create);
-
 router.put("/updatePassword/:id", userController.updatePassword);
 
 //BOARDGAME
 router.get("/boardgame", boardgameController.read);
 router.post("/boardgame/create", authController.authorize, boardgameController.create);
+router.put("/boardgame/update/:id", authController.authorize, boardgameController.update);
 router.delete("/boardgame/delete/:id", authController.authorize, boardgameController.delete);
 
 // LIBRARY
