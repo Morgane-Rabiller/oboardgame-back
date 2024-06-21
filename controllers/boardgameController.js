@@ -16,7 +16,9 @@ const boardgameController = {
                 attributes: {
                     exclude: ["createdAt", "updatedAt"],
                 },
-                include: ["user"]});
+                include: ["user"], 
+                order: [["name", "ASC"]]
+            });
 
             return res.status(200).json({ message: "Success", data: boardgames });
         } catch (error) {
