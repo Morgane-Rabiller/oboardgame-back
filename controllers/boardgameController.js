@@ -46,6 +46,7 @@ const boardgameController = {
         }
     },
 
+    // Mise à jour d'un jeu de société dans la base de données globale
     update: async (req, res) => {
         try {
             const { ...fieldToUpdate } = req.body;

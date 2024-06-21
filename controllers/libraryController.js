@@ -7,7 +7,9 @@ const defaultOptionsSanitize = {
     allowedAttributes: {},
 };
 
+// Bibliothèque personnelle d'un utilisateur
 const libraryController = {
+    
     // Voir sa bibliothèque
     read: async (req, res) => {
         try {
