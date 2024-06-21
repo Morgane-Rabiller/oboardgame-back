@@ -1,6 +1,12 @@
 const { Sequelize } = require('../db/db');
 const { Boardgame, UserBoardgame } = require('../models/associations');
 const sanitizeHtml = require("sanitize-html");
+const log4js = require("log4js");
+
+log4js.configure({
+    appenders: { logger: { type: "file", filename: "logger.log" } },
+    categories: { default: { appenders: ["logger"], level: "debug" } },
+  });
 
 const defaultOptionsSanitize = {
     allowedTags: [],
@@ -40,6 +46,12 @@ const boardgameController = {
             }
             // Si il n'est pas dans la base de données, on le crée
             const newBoardgame = await Boardgame.create({name:sanitizedName, ...fieldToCreate});
+
+            // Mise en place de logs pour surveiller les créations de jeux
+            const currentUser = req.user.pseudo;
+            const logger = log4js.getLogger();
+            logger.level = "debug";
+            logger.debug(`L'utilisateur ${currentUser} à créé le jeu "${newBoardgame.dataValues.name}", dont l'id est ${newBoardgame.dataValues.id}`);
             
             return res.status(201).json({ message: "Jeu crée", newBoardgame });
         } catch (error) {
