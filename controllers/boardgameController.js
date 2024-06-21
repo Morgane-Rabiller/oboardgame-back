@@ -46,6 +46,16 @@ const boardgameController = {
         }
     },
     
+    // Suppression d'un jeu de la base de données globale
+    delete: async (req, res) => {
+        const boardgameId = parseInt(req.params.id, 10);
+        const boardgameToDelete = await Boardgame.findByPk(boardgameId);
+        if(!boardgameToDelete) {
+            return res.status(401).json({ message: "Jeu non existant" });
+        }
+        await boardgameToDelete.destroy();
+        res.status(201).json({ message: `Jeu ${boardgameToDelete.dataValues.name} supprimé` });
+    }
 
 }
 

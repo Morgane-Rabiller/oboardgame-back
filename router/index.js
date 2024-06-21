@@ -16,6 +16,7 @@ router.put("/updatePassword/:id", userController.updatePassword);
 //BOARDGAME
 router.get("/boardgame", boardgameController.read);
 router.post("/boardgame/create", authController.authorize, boardgameController.create);
+router.delete("/boardgame/delete/:id", authController.authorize, boardgameController.delete);
 
 // LIBRARY
 router.get("/library", authController.authorize,libraryController.read);
