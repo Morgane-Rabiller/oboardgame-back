@@ -16,6 +16,9 @@ const authController = {
         const currentPassword = sanitizeHtml(password, defaultOptionsSanitize);
 
         try {
+            if(!currentPassword || !currentEmail) {
+                return res.status(401).json({ message: "Tous les champs sont obligatoires !" });
+            }
             const user = await User.findOne({ where: { email: currentEmail }});
             if (!user) {
                 return res.status(401).json({ message: "Email ou mot de passe incorrect" });
