@@ -14,10 +14,17 @@ const libraryController = {
     read: async (req, res) => {
         try {
             const userId = parseInt(req.user.id, 10);
-            const boardgamesInLibrary = await UserBoardgame.findAll({ where: { user_id: userId }});
-    
-            return res.status(200).json({ message: "Les jeux de ta bibliothèque !", data: boardgamesInLibrary });
+            const boardgamesInLibrary = await UserBoardgame.findAll({ where: { user_id: userId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}]});
+
+            const formattedResponse = boardgamesInLibrary.map(ub => ({
+                ...ub.dataValues,
+                name: ub.boardgame.name
+            }));
+            
+            return res.status(200).json({ message: "Les jeux de ta bibliothèque !", data: formattedResponse });
         } catch (error) {
+            console.log(error);
+            
             return res.status(401).json({ message: "Tu n'as pas encore de jeux dans ta bibliothèque" });
         }
     },

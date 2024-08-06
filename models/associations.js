@@ -60,6 +60,16 @@ Boardgame.belongsToMany(User, {
     timestamps: false
 });
 
+UserBoardgame.belongsTo(Boardgame, {
+    as: "boardgame",
+    foreignKey: "boardgame_id"
+});
+
+UserBoardgame.belongsTo(User, {
+    as: "user",
+    foreignKey: "user_id"
+});
+
 module.exports = {
     User, 
     Boardgame,
