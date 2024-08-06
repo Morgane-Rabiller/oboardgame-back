@@ -30,8 +30,8 @@ const userController = {
             if(!currentPassword) {
                 return res.status(401).json({ message: "Le mot de passe est obligatoire" });
             }
-            if (currentPseudo.length < 4) {
-                return res.status(401).json({ message: "Ton pseudo doit comporter plus de 3 caractères" });
+            if (currentPseudo.length < 3) {
+                return res.status(401).json({ message: "Ton pseudo doit comporter plus de 2 caractères" });
             }
             if (!userController.emailRegex.test(currentEmail)) {
                 return res.status(401).json({ message: "Le format de l'adresse mail n'est pas correct" });
