@@ -56,7 +56,7 @@ const libraryController = {
                     age: boardgame.age, 
                     type_game: boardgame.type
                 });
-                return res.status(201).json({ message: "Jeu existant dans la base de données et bien ajouté à ta librairie", newUserBoardgame });
+                return res.status(201).json({ message: "Le jeu a bien été ajouté dans ta bibliothèque", newUserBoardgame });
             } else {
                 return res.status(
                     
