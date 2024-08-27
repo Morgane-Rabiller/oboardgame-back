@@ -14,7 +14,7 @@ const libraryController = {
     read: async (req, res) => {
         try {
             const userId = parseInt(req.user.id, 10);
-            const boardgamesInLibrary = await UserBoardgame.findAll({ where: { user_id: userId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}]});
+            const boardgamesInLibrary = await UserBoardgame.findAll({ where: { user_id: userId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}], order: [[{ model: Boardgame, as: 'boardgame' }, 'name', 'ASC']]});
 
             const formattedResponse = boardgamesInLibrary.map(ub => ({
                 ...ub.dataValues,
