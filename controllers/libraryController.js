@@ -44,7 +44,7 @@ const libraryController = {
                 
                 // Si la ligne est déjà présente dans la bibliothèque, l'utilisateur ne peux pas l'ajouter une seconde fois
                 if (lineIsPresent) {
-                    return res.status(401).json({ message: "Ce jeu est déjà présent dans ta bibliothèque, tu ne peux pas faire de doublon !"});
+                    return res.status(401).json({ message: "Ce jeu est déjà dans ta bibliothèque"});
                 }
                 // Sinon, on l'ajoute à sa bibliothèque
                 newUserBoardgame = await UserBoardgame.create({
