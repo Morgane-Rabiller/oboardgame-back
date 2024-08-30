@@ -90,10 +90,11 @@ const libraryController = {
         try {
             const userId = parseInt(req.user.id, 10);
             const boardgameId = parseInt(req.params.id, 10);
-            const boardgameToDelete = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }});
+            const boardgameToDelete = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}]});
+            const boardgameName = boardgameToDelete.boardgame.dataValues.name;
             
             await boardgameToDelete.destroy();
-            return res.status(201).json("Jeu supprimé de la bibliothèque");
+            return res.status(201).json(`Jeu ${boardgameName} supprimé de la bibliothèque`);
         } catch (error) {
             console.log(error);
             return res.status(401).json({ message: "Echec de la supprission" });
