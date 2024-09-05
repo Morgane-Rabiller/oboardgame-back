@@ -79,6 +79,12 @@ const libraryController = {
             if(fieldToUpdate.player_min > 10 || fieldToUpdate.player_min < 1) {
                 return res.status(401).json({ message: "Le nombre minimum de joueur ne peut pas être supérieur 10 ou inférieur à 1 !"});
             }
+            if(fieldToUpdate.player_max > 50 || fieldToUpdate.player_max < 1) {
+                return res.status(401).json({ message: "Le nombre maximum de joueur ne peut pas être supérieur 50 ou inférieur à 1 !"});
+            }
+            if(fieldToUpdate.age < 2) {
+                return res.status(401).json({ message: "L'age ne peut pas être en dessous de 2 ans !"});
+            }
             
             
             const boardgameToUpdate = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }});
