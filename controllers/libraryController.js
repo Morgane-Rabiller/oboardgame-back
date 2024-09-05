@@ -75,6 +75,12 @@ const libraryController = {
             const { ...fieldToUpdate } = req.body;
             const userId = parseInt(req.user.id, 10);
             const boardgameId = parseInt(req.params.id, 10);
+            console.log(fieldToUpdate);
+            if(fieldToUpdate.player_min > 10 || fieldToUpdate.player_min < 1) {
+                return res.status(401).json({ message: "Le nombre minimum de joueur ne peut pas être supérieur 10 ou inférieur à 1 !"});
+            }
+            
+            
             const boardgameToUpdate = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }});
             
             const boardgame = await boardgameToUpdate.update(fieldToUpdate);
