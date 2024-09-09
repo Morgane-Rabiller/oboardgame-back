@@ -82,8 +82,8 @@ const libraryController = {
             if(fieldToUpdate.player_max > 50 || fieldToUpdate.player_max < 1) {
                 return res.status(401).json({ message: "Le nombre maximum de joueur ne peut pas être supérieur 50 ou inférieur à 1 !"});
             }
-            if(fieldToUpdate.age < 2) {
-                return res.status(401).json({ message: "L'age ne peut pas être en dessous de 2 ans !"});
+            if(fieldToUpdate.age < 2 || fieldToUpdate.age > 18) {
+                return res.status(401).json({ message: "L'age ne peut pas être en dessous de 2 ans et est forcément autorisé au dessus de 18 ans !"});
             }
             
             
