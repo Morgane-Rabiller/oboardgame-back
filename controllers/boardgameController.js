@@ -37,6 +37,15 @@ const boardgameController = {
         try {
             const { name, ...fieldToCreate } = req.body;
             const sanitizedName = sanitizeHtml(name, defaultOptionsSanitize);
+            
+            if(name === "") {
+                return res.status(401).json({ message: "Un jeu doit avoir un nom" });
+                // return res.status(401).json({ message: "Merci de remplir tous les champs" });
+            }
+            if(fieldToCreate.type === null || fieldToCreate.time === null){
+                
+                return res.status(401).json({ message: "Merci de remplir tous les champs" });
+            }
             const boardgame = await Boardgame.findOne({ where: Sequelize.where(Sequelize.fn('lower', Sequelize.col('name')), Sequelize.fn('lower', sanitizedName)) });
             
             // Si le jeu existe déjà dans la base de données, on ne le crée pas une deuxième fois.
