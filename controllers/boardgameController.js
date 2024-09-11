@@ -39,7 +39,7 @@ const boardgameController = {
             const sanitizedName = sanitizeHtml(name, defaultOptionsSanitize);
             
             if(name === "") {
-                return res.status(401).json({ message: "Un jeu doit avoir un nom" });
+                return res.status(401).json({ message: "Tu as oublié le nom du jeu !" });
                 // return res.status(401).json({ message: "Merci de remplir tous les champs" });
             }
             if(fieldToCreate.type === null || fieldToCreate.time === null){
