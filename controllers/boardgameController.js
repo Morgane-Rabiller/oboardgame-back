@@ -22,7 +22,6 @@ const boardgameController = {
                 attributes: {
                     exclude: ["createdAt", "updatedAt"],
                 },
-                include: ["user"], 
                 order: [["name", "ASC"]]
             });
 
