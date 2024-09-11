@@ -44,7 +44,7 @@ const boardgameController = {
             }
             if(fieldToCreate.type === null || fieldToCreate.time === null){
                 
-                return res.status(401).json({ message: "Merci de remplir tous les champs" });
+                return res.status(401).json({ message: "Merci de remplir tous les champs !" });
             }
             const boardgame = await Boardgame.findOne({ where: Sequelize.where(Sequelize.fn('lower', Sequelize.col('name')), Sequelize.fn('lower', sanitizedName)) });
             
