@@ -61,7 +61,7 @@ const boardgameController = {
             logger.level = "debug";
             logger.debug(`L'utilisateur ${currentUser} à créé le jeu "${newBoardgame.dataValues.name}", dont l'id est ${newBoardgame.dataValues.id}`);
             
-            return res.status(201).json({ message: "Jeu crée", newBoardgame });
+            return res.status(201).json({ message: `Jeu ${newBoardgame.dataValues.name} ajouté à la liste des jeux`, newBoardgame });
         } catch (error) {
             console.log(error);
             return res.status(401).json({ message: "Jeu non crée" });
