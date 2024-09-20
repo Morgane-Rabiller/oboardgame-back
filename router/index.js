@@ -10,7 +10,7 @@ router.post("/login", authController.login);
 
 // USER
 router.post("/registerUser", userController.create);
-router.put("/updatePassword/:id", userController.updatePassword);
+router.put("/updatePassword", authController.authorize, userController.updatePassword);
 
 //BOARDGAME
 router.get("/boardgame", authController.authorize, boardgameController.read);

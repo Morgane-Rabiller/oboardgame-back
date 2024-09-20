@@ -52,7 +52,7 @@ const userController = {
     },
     updatePassword: async (req, res) => {
         try {
-            const id = parseInt(req.params.id, 10);
+            const id = parseInt(req.user.id, 10);
             const user = await User.findByPk(id);
             const oldPassword = user.dataValues.password;
             if(!user) {
