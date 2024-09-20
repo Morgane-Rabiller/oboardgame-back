@@ -102,7 +102,7 @@ const userController = {
             const hashedPassword = await bcrypt.hash(sanitizedNewPassword, 10);
 
             await user.update({ password: hashedPassword });
-            return res.status(201).json({ message: "Ton mot de passe a bien été modifié" });
+            return res.status(201).json({ message: "Mot de passe modifié ✔" });
         } catch (error) {
             console.log(error);
             res.status(401).json({ message: "Echec du changement de mot de passe" });
