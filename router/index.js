@@ -9,6 +9,7 @@ const libraryController = require("../controllers/libraryController.js");
 router.post("/login", authController.login);
 
 // USER
+router.get("/user", userController.read);
 router.post("/registerUser", userController.create);
 router.put("/updatePassword", authController.authorize, userController.updatePassword);
 router.put("/deleteAccount", authController.authorize, userController.deleteAccount);

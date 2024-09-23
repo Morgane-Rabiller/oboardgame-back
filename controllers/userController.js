@@ -13,6 +13,15 @@ const userController = {
     passwordRegex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
     emailRegex: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
 
+    read: async (req, res) => {
+        try {
+            const users = await User.findAll();
+            return res.status(200).json({message: "liste des utilisateurs", users});
+        } catch (error) {
+            return res.status(401).json({message: "Utilisateurs non trouvés", error});
+        }
+    },
+
     create: async (req, res) => {
         const { email, pseudo, password, passwordRepeat } = req.body;
         const currentEmail = sanitizeHtml(email, defaultOptionsSanitize);
