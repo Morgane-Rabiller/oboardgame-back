@@ -12,7 +12,7 @@ router.post("/login", authController.login);
 router.get("/user", userController.read);
 router.post("/registerUser", userController.create);
 router.put("/updatePassword", authController.authorize, userController.updatePassword);
-router.put("/deleteAccount", authController.authorize, userController.deleteAccount);
+router.delete("/deleteAccount", authController.authorize, userController.deleteAccount);
 
 //BOARDGAME
 router.get("/boardgame", authController.authorize, boardgameController.read);
