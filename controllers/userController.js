@@ -50,6 +50,7 @@ const userController = {
             return res.status(401).json({ message: "Echec de l'inscription" });
         }
     },
+
     updatePassword: async (req, res) => {
         try {
             const id = parseInt(req.user.id, 10);
@@ -106,6 +107,25 @@ const userController = {
         } catch (error) {
             console.log(error);
             res.status(401).json({ message: "Echec du changement de mot de passe" });
+        }
+    },
+
+    deleteAccount: async (req, res) => {
+        try {
+            const idUser = parseInt(req.user.id);
+            const userToDelete = await User.findByPk(idUser);
+
+            if (!userToDelete) {
+                return res.status(404).json("Utilisateur non trouvé");
+            }
+            await userToDelete.destroy({ where: { user_id: userToDelete } });
+            res.status(201).json({
+                message: "Compte supprimé ✔",
+                user: userToDelete,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(401).json({ message: "Echec de la suppression du compte !"});
         }
     }
 }
