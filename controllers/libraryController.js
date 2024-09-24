@@ -1,6 +1,7 @@
 const { Sequelize } = require('../db/db');
 const { Boardgame, UserBoardgame } = require('../models/associations');
 const sanitizeHtml = require("sanitize-html");
+const { Op } = require('sequelize');
 
 const defaultOptionsSanitize = {
     allowedTags: [],
@@ -26,6 +27,34 @@ const libraryController = {
             console.log(error);
             
             return res.status(401).json({ message: "Tu n'as pas encore de jeux dans ta bibliothèque" });
+        }
+    },
+
+    findBoardgame: async (req, res) => {
+        try {
+            const userId = parseInt(req.user.id, 10);
+            const players = parseInt(req.body.players, 10);
+            // Initialisation d'un objet pour stocker les critères de recherche
+            const searchCriteria = {
+                user_id: userId,
+                player_min:{ [Op.lte]: players },
+                player_max: { [Op.gte]: players },
+                ...(req.body.type && { type_game: req.body.type }),
+                ...(req.body.age && { age: { [Op.gte]:parseInt(req.body.age, 10) }}),
+                ...(req.body.time && { time: { [Op.lte]: parseInt(req.body.time, 10) }})
+            };
+    
+            const filteredBoardgames = await UserBoardgame.findAll({
+                where: searchCriteria,
+                include: [{ model: Boardgame, as: "boardgame", attributes: ['name'] }]
+            });
+
+            console.log(filteredBoardgames);
+            return res.status(200).json({ message: "Jeu aléatoire :", data: filteredBoardgames });
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(401).json({ message: "Echec de la demande" });
         }
     },
 

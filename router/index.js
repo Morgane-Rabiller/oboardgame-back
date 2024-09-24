@@ -22,6 +22,7 @@ router.delete("/boardgame/delete/:id", authController.authorize, boardgameContro
 
 // LIBRARY
 router.get("/library", authController.authorize,libraryController.read);
+router.get("/library/random", authController.authorize, libraryController.findBoardgame);
 router.post("/library/addBoardgame", authController.authorize, libraryController.addBoardgame);
 router.put("/library/update/:id", authController.authorize, libraryController.update);
 router.delete("/library/delete/:id", authController.authorize, libraryController.delete);
