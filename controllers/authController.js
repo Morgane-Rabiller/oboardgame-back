@@ -3,11 +3,17 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sanitizeHtml = require("sanitize-html");
+const { RateLimiterMemory } = require('rate-limiter-flexible');
 
 const defaultOptionsSanitize = {
     allowedTags: [],
     allowedAttributes: {},
 };
+
+const rateLimiter = new RateLimiterMemory({
+    points: 3, // Nombre de requêtes autorisées
+    duration: 5 * 60, // Durée de la fenêtre en secondes (5 minutes)
+});
 
 const authController = {
     login: async (req, res) => {
@@ -16,6 +22,7 @@ const authController = {
         const currentPassword = sanitizeHtml(password, defaultOptionsSanitize);
 
         try {
+            await rateLimiter.consume(email);
             if(!currentPassword || !currentEmail) {
                 return res.status(401).json({ message: "Tous les champs sont obligatoires !" });
             }
@@ -30,7 +37,7 @@ const authController = {
             }
         } catch(error) {
             console.log(error);
-            res.status(401).json({ message: "Echec de la connexion" });
+            res.status(401).json({ message: "Trop de tentatives de connexion. Réessaie dans 5 minutes." });
         }
     },
     authorize: (req, res, next) => {
