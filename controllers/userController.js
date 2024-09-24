@@ -30,6 +30,10 @@ const userController = {
         const currentPasswordRepeat = sanitizeHtml(passwordRepeat, defaultOptionsSanitize);
         
         try {
+            const email = await User.findOne({ where: { email: currentEmail }});
+            if(email) {
+                return res.status(401).json({ message: "Cette adresse mail est déjà prise" });
+            }
             if(!currentEmail) {
                 return res.status(401).json({ message: "L'email est obligatoire" });
             }
