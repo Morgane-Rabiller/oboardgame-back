@@ -53,7 +53,7 @@ const userController = {
             }
             const hashedPassword = await bcrypt.hash(currentPassword, 10);
             const user = await User.create({ email: currentEmail, pseudo: currentPseudo, password: hashedPassword });
-            return res.status(201).json({ message: "Inscription réussie !", user: user });
+            return res.status(201).json({ message: "Inscription réussie ! Tu peux maintenant aller te connecter 😉", user: user });
         } catch(error) {
             console.log(error);
             return res.status(401).json({ message: "Echec de l'inscription" });
