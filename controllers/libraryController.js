@@ -37,8 +37,8 @@ const libraryController = {
             // Initialisation d'un objet pour stocker les critères de recherche
             const searchCriteria = {
                 user_id: userId,
-                player_min:{ [Op.lte]: players },
-                player_max: { [Op.gte]: players },
+                ...(players && { player_min:{ [Op.lte]: players }}),
+                ...(players && { player_max: { [Op.gte]: players }}),
                 ...(req.body.type && { type_game: req.body.type }),
                 ...(req.body.age && { age: { [Op.gte]:parseInt(req.body.age, 10) }}),
                 ...(req.body.time && { time: { [Op.lte]: parseInt(req.body.time, 10) }})
@@ -49,7 +49,6 @@ const libraryController = {
                 include: [{ model: Boardgame, as: "boardgame", attributes: ['name'] }]
             });
 
-            console.log(filteredBoardgames);
             return res.status(200).json({ message: "Jeu aléatoire :", data: filteredBoardgames });
             
         } catch (error) {
