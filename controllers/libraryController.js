@@ -35,7 +35,11 @@ const libraryController = {
         try {
             const userId = parseInt(req.user.id, 10);
             const players = parseInt(req.query.players, 10);
+            console.log(req.query.type);
             
+            if(req.query.type === "-") {
+                req.query.type = null;
+            }
             // Initialisation d'un objet pour stocker les critères de recherche
             const searchCriteria = {
                 user_id: userId,
@@ -54,7 +58,7 @@ const libraryController = {
             const randomBoardgame = randomSelection(filteredBoardgames);
             
             if(!randomBoardgame) {
-                return res.status(401).json({ message: "Tu n'as pas de jeux dans ta bibliothèque" });
+                return res.status(401).json({ message: "Aucun jeux correspondant à ta demande" });
             }
 
             await randomBoardgame.update({release_date: new Date()});
