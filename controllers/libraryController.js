@@ -53,8 +53,10 @@ const libraryController = {
             const randomBoardgame = randomSelection(filteredBoardgames);
 
             await randomBoardgame.update({release_date: new Date()});
+            
+            const nameRandomGame = randomBoardgame.boardgame.dataValues.name;
 
-            return res.status(200).json({ message: "Jeu aléatoire :", game: randomBoardgame });
+            return res.status(200).json({ message: "Jeu sélectionné :", boardgameName: nameRandomGame });
             
         } catch (error) {
             console.log(error);
