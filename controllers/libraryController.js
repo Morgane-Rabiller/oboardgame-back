@@ -2,6 +2,7 @@ const { Sequelize } = require('../db/db');
 const { Boardgame, UserBoardgame } = require('../models/associations');
 const sanitizeHtml = require("sanitize-html");
 const { Op } = require('sequelize');
+const randomSelection = require('../services/randomSelection');
 
 const defaultOptionsSanitize = {
     allowedTags: [],
@@ -49,7 +50,11 @@ const libraryController = {
                 include: [{ model: Boardgame, as: "boardgame", attributes: ['name'] }]
             });
 
-            return res.status(200).json({ message: "Jeu aléatoire :", data: filteredBoardgames });
+            const randomBoardgame = randomSelection(filteredBoardgames);
+
+            await randomBoardgame.update({release_date: new Date()});
+
+            return res.status(200).json({ message: "Jeu aléatoire :", game: randomBoardgame });
             
         } catch (error) {
             console.log(error);

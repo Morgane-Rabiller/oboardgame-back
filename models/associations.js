@@ -39,6 +39,10 @@ const UserBoardgame = db.define("user_boardgame", {
         type: DataTypes.ENUM("Dés", "Cartes", "Plateau"),
         allowNull: false,
     },
+    release_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
 },{ timestamps: false,
     freezeTableName: true
  });
