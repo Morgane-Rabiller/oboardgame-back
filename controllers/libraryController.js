@@ -34,23 +34,28 @@ const libraryController = {
     findBoardgame: async (req, res) => {
         try {
             const userId = parseInt(req.user.id, 10);
-            const players = parseInt(req.body.players, 10);
+            const players = parseInt(req.query.players, 10);
+            
             // Initialisation d'un objet pour stocker les critères de recherche
             const searchCriteria = {
                 user_id: userId,
                 ...(players && { player_min:{ [Op.lte]: players }}),
                 ...(players && { player_max: { [Op.gte]: players }}),
-                ...(req.body.type && { type_game: req.body.type }),
-                ...(req.body.age && { age: { [Op.lte]:parseInt(req.body.age, 10) }}),
-                ...(req.body.time && { time: { [Op.lte]: parseInt(req.body.time, 10) }})
+                ...(req.query.type && { type_game: req.query.type }),
+                ...(req.query.age && { age: { [Op.lte]:parseInt(req.query.age, 10) }}),
+                ...(req.query.time && { time: { [Op.lte]: parseInt(req.query.time, 10) }})
             };
     
             const filteredBoardgames = await UserBoardgame.findAll({
                 where: searchCriteria,
                 include: [{ model: Boardgame, as: "boardgame", attributes: ['name'] }]
             });
-
+            
             const randomBoardgame = randomSelection(filteredBoardgames);
+            
+            if(!randomBoardgame) {
+                return res.status(401).json({ message: "Tu n'as pas de jeux dans ta bibliothèque" });
+            }
 
             await randomBoardgame.update({release_date: new Date()});
             
