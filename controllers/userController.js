@@ -3,6 +3,7 @@ const User = require("../models/userModel.js");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sanitizeHtml = require("sanitize-html");
+const PasswordResetToken = require("../models/passwordResetToken.js");
 
 const defaultOptionsSanitize = {
     allowedTags: [],
@@ -140,7 +141,46 @@ const userController = {
             console.log(error);
             res.status(401).json({ message: "Echec de la suppression du compte !"});
         }
-    }
+    },
+
+    updatePasswordIfForgot: async (req, res) => {
+        try {
+            const token = req.params.token;
+            const idToken = await PasswordResetToken.findOne({
+                where: { token },
+            });
+            // Si le token unique ne se trouve pas dans la table, on retourne un message d'erreur
+            if (!idToken) {
+                return res.status(401).json({
+                    message:
+                        "Le lien n'est pas valide, refait une demande de changement de mot de passe pour que celui-ci fonctionne.",
+                });
+            }
+            // Si la date d'expiration est passé, on supprime le token et on retourne un message d'erreur
+            const expiration = idToken.dataValues.expiration;
+            if (expiration < new Date()) {
+                await PasswordResetToken.destroy({ where: { token } });
+                return res.status(400).json({ message: "Le lien a expiré" });
+            }
+            const userId = idToken.dataValues.user_id;
+            const currentUser = await User.findByPk(userId);
+            const { password } = req.body;
+            const newPasword = sanitizeHtml(password, defaultOptionsSanitize);
+            const hashedPassword = await bcrypt.hash(newPasword, 10);
+            // Si tout se passe bien, on enregistre le nouveau mot de passe en base de données
+            currentUser.update({ password: hashedPassword });
+            await PasswordResetToken.destroy({ where: { token } });
+            res.status(201).json({
+                message: `Vous avez changé votre mot de passe par ${hashedPassword}`,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(401).json({
+                message:
+                    "Une erreur s'est produite, réessai ultérieurement ou contacte nous",
+            });
+        }
+    },
 }
 
 module.exports = userController;

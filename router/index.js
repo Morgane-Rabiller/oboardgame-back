@@ -13,6 +13,7 @@ router.get("/user", userController.read);
 router.post("/registerUser", userController.create);
 router.put("/updatePassword", authController.authorize, userController.updatePassword);
 router.delete("/deleteAccount", authController.authorize, userController.deleteAccount);
+router.put('/updatePassword/:token', userController.updatePasswordIfForgot);
 
 //BOARDGAME
 router.get("/boardgame", authController.authorize, boardgameController.read);
@@ -26,5 +27,8 @@ router.get("/library/random", authController.authorize, libraryController.findBo
 router.post("/library/addBoardgame", authController.authorize, libraryController.addBoardgame);
 router.put("/library/update/:id", authController.authorize, libraryController.update);
 router.delete("/library/delete/:id", authController.authorize, libraryController.delete);
+
+// CONTACT
+router.post('/forgotPassword', contactController.forgotPassword);
 
 module.exports = router;
