@@ -35,10 +35,12 @@ const libraryController = {
         try {
             const userId = parseInt(req.user.id, 10);
             const players = parseInt(req.query.players, 10);
-            console.log(req.query.type);
             
-            if(req.query.type === "-") {
+            if(req.query.type === "---") {
                 req.query.type = null;
+            }
+            if(req.query.time === "---") {
+                req.query.time = null
             }
             // Initialisation d'un objet pour stocker les critères de recherche
             const searchCriteria = {
