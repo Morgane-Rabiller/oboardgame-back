@@ -1,4 +1,3 @@
-
 const sequelize =require( "sequelize");
 const db = require("../db/db.js");
 const User = require("./userModel.js");
@@ -15,7 +14,7 @@ const PasswordResetToken = db.define("passwordResetTokens", {
         type: DataTypes.INTEGER,
         references: {
             model: User,
-            key:'user_id'
+            key:'id'
         },
     },
     token: {

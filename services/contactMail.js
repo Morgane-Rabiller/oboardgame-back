@@ -15,23 +15,23 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// const logoBuffer = fs.readFileSync('./services/imgs/oboardgame.png');
-// const logoAttachment = {
-//     filename: 'oboardgame.png',
-//     content: logoBuffer,
-//     cid: 'logo',
-// };
+const logoBuffer = fs.readFileSync('./services/imgs/oboardgame.png');
+const logoAttachment = {
+    filename: 'oboardgame.png',
+    content: logoBuffer,
+    cid: 'logo',
+};
 
-// const sendMail = async (to, subject, html) => {
-//     const  mailOptions = {
-//         from: process.env.EMAIL,
-//         to,
-//         subject,
-//         html,
-//         attachments: [logoAttachment],
-//     };
-//     return transporter.sendMail(mailOptions);
-// }
+const sendMail = async (to, subject, html) => {
+    const  mailOptions = {
+        from: process.env.EMAIL,
+        to,
+        subject,
+        html,
+        attachments: [logoAttachment],
+    };
+    return transporter.sendMail(mailOptions);
+}
 
 
 // const mailOptions = {
@@ -48,3 +48,4 @@ const transporter = nodemailer.createTransport({
 //     console.log('Email envoyé: ' + info.response);
 // }
 // });
+module.exports = sendMail;

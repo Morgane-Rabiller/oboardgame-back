@@ -2,6 +2,7 @@ const User = require("./userModel.js");
 const Boardgame = require("./boardgameModel.js");
 const db = require("../db/db.js");
 const sequelize = require("sequelize");
+const PasswordResetToken = require("./passwordResetToken.js");
 const { DataTypes } = sequelize;
 
 const UserBoardgame = db.define("user_boardgame", {
@@ -73,6 +74,16 @@ UserBoardgame.belongsTo(User, {
     as: "user",
     foreignKey: "user_id"
 });
+
+User.hasOne(PasswordResetToken, {
+    foreignKey: 'user_id',
+    as: 'passwordResetToken'
+});
+PasswordResetToken.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'user'
+});
+
 
 module.exports = {
     User, 

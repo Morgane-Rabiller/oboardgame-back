@@ -6,7 +6,7 @@ const CryptoJS = require("crypto-js");
 const { v4: uuidv4 } = require('uuid');
 
 const sanitizeHtml = require("sanitize-html");
-const createHtmlForgotPassword = require("../services/templatesHtml/ForgotPassword.js");
+const createHtmlForgotPassword = require("../services/templateHtml/ForgotPassword.js");
 const PasswordResetToken = require("../models/passwordResetToken.js");
 
 const defaultOptionsSanitize = {
@@ -22,7 +22,9 @@ const contactController = {
         const { email } = req.body;
         try {
             const user = await User.findOne({ where: { email } });
-            const userId = user.dataValues.user_id;
+            
+            const userId = user.dataValues.id;
+            
             const userToDestroy = await PasswordResetToken.findOne({ where: { user_id: userId }});
             // Si l'id de l'utilisateur qui fait la demande est déjà présente dans la table de génération de token, je le supprime de cette table.
             if (userToDestroy) {

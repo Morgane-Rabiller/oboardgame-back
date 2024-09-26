@@ -4,6 +4,7 @@ const authController =require("../controllers/authController.js");
 const userController =require("../controllers/userController.js");
 const boardgameController =require("../controllers/boardgameController.js");
 const libraryController = require("../controllers/libraryController.js");
+const contactController = require("../controllers/contactController.js");
 
 //LOGIN
 router.post("/login", authController.login);
