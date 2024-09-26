@@ -60,7 +60,7 @@ const createHtmlForgotPassword = (user, link) => {
                                     <p> Si ce n'est pas toi, merci d'ignorer ce mail.</p>
                                 </td>
                             </tr>
-                            <tr style="border-top: 10px solid #CBE4DE; border-bottom: 10px solid #CBE4DE;">
+                            <tr>
                                 <td style="background-color: #fff; width: 10%;"></td>
                                 <td>
                                     <a href="${link}" style="margin: 0;">Clique ici pour changer ton mot de passe</a>
