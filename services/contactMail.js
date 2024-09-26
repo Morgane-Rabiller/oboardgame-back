@@ -34,17 +34,17 @@ const transporter = nodemailer.createTransport({
 // }
 
 
-const mailOptions = {
-    from: process.env.EMAIL,
-    to: 'morganerabiller@yahoo.fr',
-    subject: 'Test de Nodemailer',
-    html: `<h1>Ceci est un test!</h1> Et normalement mon .env passe !<br/> ${process.env.EMAIL}`
-};
+// const mailOptions = {
+//     from: process.env.EMAIL,
+//     to: 'morganerabiller@yahoo.fr',
+//     subject: 'Test de Nodemailer',
+//     html: `<h1>Ceci est un test!</h1> Et normalement mon .env passe !<br/> ${process.env.EMAIL}`
+// };
 
-transporter.sendMail(mailOptions, function(error, info){
-if (error) {
-    console.log(error);
-} else {
-    console.log('Email envoyé: ' + info.response);
-}
-});
+// transporter.sendMail(mailOptions, function(error, info){
+// if (error) {
+//     console.log(error);
+// } else {
+//     console.log('Email envoyé: ' + info.response);
+// }
+// });
