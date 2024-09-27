@@ -165,16 +165,20 @@ const userController = {
             const userId = idToken.dataValues.user_id;
             const currentUser = await User.findByPk(userId);
             const { password, passwordRepeat } = req.body;
-            const newPasword = sanitizeHtml(password, defaultOptionsSanitize);
+            const newPassword = sanitizeHtml(password, defaultOptionsSanitize);
             const newPasswordRepeat = sanitizeHtml(passwordRepeat, defaultOptionsSanitize);
 
+            if(!password || !passwordRepeat) {
+                return res.status(401).json({message: "Merci de bien vouloir remplir tous les champs"});
+            }
             if(newPassword !== newPasswordRepeat) {
-                return res.status(401).json({message: "Les mots de passe ne sont pas identiques !"})
+                return res.status(401).json({message: "Les mots de passe ne sont pas identiques !"});
             }
             if(!userController.passwordRegex.test(newPassword)) {
                 return res.status(401).json({message: "Ton mot de passe doit comporter minimum 8 caractères dont une minuscule, une majuscule et un chiffre."});
             }
-            const hashedPassword = await bcrypt.hash(newPasword, 10);
+
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
             // Si tout se passe bien, on enregistre le nouveau mot de passe en base de données
             currentUser.update({ password: hashedPassword });
             await PasswordResetToken.destroy({ where: { token } });
