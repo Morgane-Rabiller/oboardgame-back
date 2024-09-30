@@ -21,7 +21,14 @@ const contactController = {
         // Récupération de l'adresse mail de l'utilisateur
         const { email } = req.body;
         try {
+            console.log(email);
+            
             const user = await User.findOne({ where: { email } });
+            console.log(user);
+            
+            if(!user) {
+                return res.status(401).json({message: "Adresse mail non valide !"})
+            }
             
             const userId = user.dataValues.id;
             
