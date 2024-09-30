@@ -48,7 +48,7 @@ const contactController = {
             // Création du contenu du mail
             const htmlConfirmation = createHtmlForgotPassword(
                 user.dataValues.pseudo,
-                `http://localhost:8081/newPassword/${tokenGenerated.token}`
+                `http://localhost:3000/nouveau-mot-de-passe/${tokenGenerated.token}`
             );
             // Envoi du mail
             await sendMail(email, "Mot de passe oublié", htmlConfirmation);
