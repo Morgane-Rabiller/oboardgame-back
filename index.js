@@ -1,6 +1,7 @@
 require('dotenv').config();
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 const express = require('express');
+const db = require( './db/db.js');
 const cors = require('cors');
 const app = express();
 const router = require("./router/index.js");
@@ -18,5 +19,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(router);
+db.sync().then(console.log("Connexion OK !!!")).catch(error => console.log(error));
 
 app.listen(port, () => console.log("Run in Port : " + port));

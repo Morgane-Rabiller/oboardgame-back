@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sanitizeHtml = require("sanitize-html");
-const { RateLimiterMemory } = require('rate-limiter-flexible');
+const RateLimiterMemory = require('rate-limiter-flexible/lib/RateLimiterMemory');
 
 const defaultOptionsSanitize = {
     allowedTags: [],

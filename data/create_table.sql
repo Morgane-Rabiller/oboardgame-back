@@ -43,4 +43,12 @@ CREATE TABLE "user_boardgame" (
     type_game type NOT NULL
 );
 
+CREATE TABLE "passwordResetTokens" (
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE,
+    token VARCHAR(150) NOT NULL,
+    expiration TIMESTAMP NOT NULL
+);
+
 COMMIT;

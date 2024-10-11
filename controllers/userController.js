@@ -17,6 +17,10 @@ const userController = {
     read: async (req, res) => {
         try {
             const users = await User.findAll();
+
+            if(!users) {
+                return res.status(401).json({message: "Pas d'utilisateurs d'enregistrés"});
+            }
             return res.status(200).json({message: "liste des utilisateurs", users});
         } catch (error) {
             return res.status(401).json({message: "Utilisateurs non trouvés", error});
@@ -158,6 +162,7 @@ const userController = {
             }
             // Si la date d'expiration est passé, on supprime le token et on retourne un message d'erreur
             const expiration = idToken.dataValues.expiration;
+            
             if (expiration < new Date()) {
                 await PasswordResetToken.destroy({ where: { token } });
                 return res.status(400).json({ message: "Le lien a expiré" });
