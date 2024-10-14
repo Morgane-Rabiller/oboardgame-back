@@ -26,7 +26,7 @@ const authController = {
             if(!currentPassword || !currentEmail) {
                 return res.status(401).json({ message: "Tous les champs sont obligatoires !" });
             }
-            const user = await User.findOne({ where: { email: currentEmail }});
+            const user = await User.findOne({ where: { email: currentEmail }, attributes: ['id', 'email', 'password', 'pseudo', 'check']});
             if (!user) {
                 return res.status(401).json({ message: "Email ou mot de passe incorrect" });
             } else if(!await bcrypt.compare(currentPassword, user.password)) {
