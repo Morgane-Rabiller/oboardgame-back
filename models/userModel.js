@@ -23,6 +23,10 @@ const User = db.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        check: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         created_at: {
             field: "created_at",
             type: DataTypes.DATE,

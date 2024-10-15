@@ -15,6 +15,7 @@ router.post("/registerUser", userController.create);
 router.put("/updatePassword", authController.authorize, userController.updatePassword);
 router.delete("/deleteAccount", authController.authorize, userController.deleteAccount);
 router.put('/updatePassword/:token', userController.updatePasswordIfForgot);
+router.put('/validateAccount', authController.authorize, userController.validateAccount);
 
 //BOARDGAME
 router.get("/boardgame", authController.authorize, boardgameController.read);

@@ -196,6 +196,21 @@ const userController = {
             });
         }
     },
+
+    validateAccount: async (req, res) => {
+        try {
+            const idUser = parseInt(req.user.id);
+            const userToValidate = await User.findByPk(idUser);
+            if (!userToValidate) {
+                return res.status(404).json({ message: "Utilisateur non trouvé." });
+            }
+            await userToValidate.update({check: true});
+            return res.status(201).json({ message: "Compte validé !"});
+        } catch (error) {
+            console.log(error);
+            return res.status(401).json({ message: "Erreur: Compte non validé."})
+        }
+    }
 }
 
 module.exports = userController;
