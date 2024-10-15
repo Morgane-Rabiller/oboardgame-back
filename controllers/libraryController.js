@@ -48,7 +48,7 @@ const libraryController = {
                 ...(players && { player_min:{ [Op.lte]: players }}),
                 ...(players && { player_max: { [Op.gte]: players }}),
                 ...(req.query.type && { type_game: req.query.type }),
-                ...(req.query.age && { age: { [Op.lte]:parseInt(req.query.age, 10) }}),
+                ...(req.query.age && { age: { [Op.gte]:parseInt(req.query.age, 10) }}),
                 ...(req.query.time && { time: { [Op.lte]: parseInt(req.query.time, 10) }})
             };
     
