@@ -40,11 +40,13 @@ const boardgameController = {
             
             if(name === "") {
                 return res.status(401).json({ message: "Tu as oublié le nom du jeu !" });
-                // return res.status(401).json({ message: "Merci de remplir tous les champs" });
             }
             if(fieldToCreate.type === null || fieldToCreate.time === null){
                 
                 return res.status(401).json({ message: "Merci de remplir tous les champs !" });
+            }
+            if(fieldToCreate.age > 18 || fieldToCreate.age < 2) {
+                return res.status(401).json({ message: "Impossible de mettre un age inférieur à 2 ou supérieur à 18." })
             }
             const boardgame = await Boardgame.findOne({ where: Sequelize.where(Sequelize.fn('lower', Sequelize.col('name')), Sequelize.fn('lower', sanitizedName)) });
             
