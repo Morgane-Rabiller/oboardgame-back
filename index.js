@@ -5,13 +5,14 @@ const db = require( './db/db.js');
 const cors = require('cors');
 const app = express();
 const router = require("./router/index.js");
-
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 app.use(express.json());
 
 const corsOptions = {
-    origin: "*",
+    origin: "http://localhost:3000",
     methods: "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS",
-    credentials: false,
+    credentials: true,
     preflightContinue: false,
     allowedHeaders: "Content-Type, Authorization, X-Requested-With",
 };

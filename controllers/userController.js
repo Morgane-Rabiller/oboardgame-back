@@ -27,6 +27,23 @@ const userController = {
         }
     },
 
+    fetchUser: async (req, res) => {
+        try {
+            const id = parseInt(req.user.id, 10);
+            const user = await User.findByPk(id);
+            console.log(user);
+
+            if(!user) {
+                return res.status(401).json({message: "Utilisater non connu"});
+            }
+            return res.status(200).json({message: `Utilisateur ${user.dataValues.pseudo} en ligne`, user});
+        } catch (error) {
+            console.log(error);
+            
+            return res.status(401).json({message: "Utilisateurs non trouvés", error});
+        }
+    },
+
     create: async (req, res) => {
         const { email, pseudo, password, passwordRepeat } = req.body;
         const currentEmail = sanitizeHtml(email, defaultOptionsSanitize);

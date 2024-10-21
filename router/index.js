@@ -8,9 +8,11 @@ const contactController = require("../controllers/contactController.js");
 
 //LOGIN
 router.post("/login", authController.login);
+router.post("/logout",authController.authorize, authController.logout);
 
 // USER
-router.get("/user", userController.read);
+router.get("/users", userController.read);
+router.get("/user", authController.authorize, userController.fetchUser);
 router.post("/registerUser", userController.create);
 router.put("/updatePassword", authController.authorize, userController.updatePassword);
 router.delete("/deleteAccount", authController.authorize, userController.deleteAccount);
