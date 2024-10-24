@@ -11,6 +11,7 @@ app.use(express.json());
 
 const corsOptions = {
     origin: "http://localhost:3000",
+    // origin: "https://oboardgame.mogo-r.fr",
     methods: "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS",
     credentials: true,
     preflightContinue: false,

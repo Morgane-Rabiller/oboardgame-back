@@ -31,7 +31,6 @@ const userController = {
         try {
             const id = parseInt(req.user.id, 10);
             const user = await User.findByPk(id);
-            console.log(user);
 
             if(!user) {
                 return res.status(401).json({message: "Utilisater non connu"});

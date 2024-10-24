@@ -6,6 +6,7 @@ const log4js = require("log4js");
 log4js.configure({
     appenders: { logger: { type: "file", filename: "logger.log" } },
     categories: { default: { appenders: ["logger"], level: "debug" } },
+    disableClustering: true
   });
 
 const defaultOptionsSanitize = {

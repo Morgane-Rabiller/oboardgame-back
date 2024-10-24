@@ -8,7 +8,7 @@ const contactController = require("../controllers/contactController.js");
 
 //LOGIN
 router.post("/login", authController.login);
-router.post("/logout",authController.authorize, authController.logout);
+router.post("/logout", authController.authorize, authController.logout);
 
 // USER
 router.get("/users", userController.read);

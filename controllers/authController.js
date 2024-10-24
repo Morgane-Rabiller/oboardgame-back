@@ -62,6 +62,8 @@ const authController = {
             req.user = decodedToken.user;
             next();
         } catch (error) {
+            console.log(error);
+            
             return res.status(404).json({ message: "Pas d'autorisation token", erreur: error });
         }
     }
