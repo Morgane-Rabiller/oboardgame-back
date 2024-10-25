@@ -19,7 +19,7 @@ const authController = {
     login: async (req, res) => {
         const { email, password } = req.body;
         
-        const currentEmail = sanitizeHtml(email, defaultOptionsSanitize);
+        const currentEmail = sanitizeHtml(email.toLowerCase(), defaultOptionsSanitize);
         const currentPassword = sanitizeHtml(password, defaultOptionsSanitize);
 
         try {

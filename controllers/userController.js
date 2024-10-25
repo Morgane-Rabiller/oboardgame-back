@@ -45,7 +45,7 @@ const userController = {
 
     create: async (req, res) => {
         const { email, pseudo, password, passwordRepeat } = req.body;
-        const currentEmail = sanitizeHtml(email, defaultOptionsSanitize);
+        const currentEmail = sanitizeHtml(email.toLowerCase(), defaultOptionsSanitize);
         const currentPseudo = sanitizeHtml(pseudo, defaultOptionsSanitize);
         const currentPassword = sanitizeHtml(password, defaultOptionsSanitize);
         const currentPasswordRepeat = sanitizeHtml(passwordRepeat, defaultOptionsSanitize);

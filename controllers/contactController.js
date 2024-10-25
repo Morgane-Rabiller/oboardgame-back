@@ -16,12 +16,12 @@ const defaultOptionsSanitize = {
 
 const contactController = {
     forgotPassword: async (req, res) => {
-        req.body.email = sanitizeHtml(req.body.email, defaultOptionsSanitize);
-
+        
         // Récupération de l'adresse mail de l'utilisateur
         const { email } = req.body;
+        const currentEmail = sanitizeHtml(email.toLowerCase(), defaultOptionsSanitize);
         try {
-            const user = await User.findOne({ where: { email } });
+            const user = await User.findOne({ where: { currentEmail } });
             
             if(!user) {
                 return res.status(401).json({message: "Adresse mail non valide !"})
