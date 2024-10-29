@@ -40,6 +40,10 @@ const UserBoardgame = db.define("user_boardgame", {
         type: DataTypes.ENUM("Dés", "Cartes", "Plateau"),
         allowNull: false,
     },
+    note: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     release_date: {
         type: DataTypes.DATE,
         allowNull: true,
