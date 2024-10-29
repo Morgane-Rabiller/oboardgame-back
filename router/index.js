@@ -36,6 +36,7 @@ router.delete("/library/delete/:id", authController.authorize, libraryController
 // NOTE
 router.get("/note/:id", authController.authorize, noteController.read);
 router.put("/note/add/:id", authController.authorize, noteController.addNote);
+router.put("/note/delete/:id", authController.authorize, noteController.delete);
 
 // CONTACT
 router.post('/forgotPassword', contactController.forgotPassword);

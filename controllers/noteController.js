@@ -9,10 +9,10 @@ const defaultOptionsSanitize = {
     allowedAttributes: {},
 };
 
-// Bibliothèque personnelle d'un utilisateur
+// Note d'un jeu de la bibliothèque
 const libraryController = {
     
-    // Voir sa bibliothèque
+    // Voir la note d'un jeu
     read: async (req, res) => {
         try {
             const userId = parseInt(req.user.id, 10);
@@ -31,7 +31,7 @@ const libraryController = {
         }
     },
 
-    // Modification des champs d'un des jeux de sa bibliothèque
+    // Ajout d'une note sur un jeu
     addNote: async (req, res) => {
         try {
             const { note } = req.body;
@@ -53,21 +53,21 @@ const libraryController = {
         }
     },
 
-    // // Supprimer un jeu de sa bibliothèque
-    // delete: async (req, res) => {
-    //     try {
-    //         const userId = parseInt(req.user.id, 10);
-    //         const boardgameId = parseInt(req.params.id, 10);
-    //         const boardgameToDelete = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}]});
-    //         const boardgameName = boardgameToDelete.boardgame.dataValues.name;
+    // Supprimer la note d'un jeu
+    delete: async (req, res) => {
+        try {
+            const userId = parseInt(req.user.id, 10);
+            const boardgameId = parseInt(req.params.id, 10);
+            const boardgameToUpdate = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}]});
+            const boardgameName = boardgameToUpdate.boardgame.dataValues.name;
             
-    //         await boardgameToDelete.destroy();
-    //         return res.status(201).json(`Jeu ${boardgameName} supprimé de la bibliothèque`);
-    //     } catch (error) {
-    //         console.log(error);
-    //         return res.status(401).json({ message: "Echec de la supprission" });
-    //     }
-    // }
+            await boardgameToUpdate.update({ note: null});
+            return res.status(201).json(`Suppression de la note pour le jeu ${boardgameName}`);
+        } catch (error) {
+            console.log(error);
+            return res.status(401).json({ message: "Echec de la suppression" });
+        }
+    }
 }
 
 module.exports = libraryController;
