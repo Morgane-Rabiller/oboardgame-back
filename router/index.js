@@ -4,6 +4,7 @@ const authController =require("../controllers/authController.js");
 const userController =require("../controllers/userController.js");
 const boardgameController =require("../controllers/boardgameController.js");
 const libraryController = require("../controllers/libraryController.js");
+const noteController = require("../controllers/noteController.js");
 const contactController = require("../controllers/contactController.js");
 
 //LOGIN
@@ -31,6 +32,10 @@ router.get("/library/random", authController.authorize, libraryController.findBo
 router.post("/library/addBoardgame", authController.authorize, libraryController.addBoardgame);
 router.put("/library/update/:id", authController.authorize, libraryController.update);
 router.delete("/library/delete/:id", authController.authorize, libraryController.delete);
+
+// NOTE
+router.get("/note/:id", authController.authorize, noteController.read);
+router.put("/note/add/:id", authController.authorize, noteController.addNote);
 
 // CONTACT
 router.post('/forgotPassword', contactController.forgotPassword);
