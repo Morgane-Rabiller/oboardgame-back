@@ -36,10 +36,11 @@ const libraryController = {
             const userId = parseInt(req.user.id, 10);
             const boardgameId = parseInt(req.params.id, 10);
             const currentNote = sanitizeHtml(note, defaultOptionsSanitize);
+            let boardgameToUpdate;
             let boardgame;
 
             if (currentNote !== "") {
-                const boardgameToUpdate = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}]});
+                boardgameToUpdate = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}]});
                 boardgame = await boardgameToUpdate.update({ note : currentNote });
             }
             const boardgameName = boardgameToUpdate.boardgame.dataValues.name;
