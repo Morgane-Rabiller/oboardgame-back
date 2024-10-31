@@ -20,13 +20,11 @@ const libraryController = {
             const boardgame = await UserBoardgame.findOne({ where: { user_id:userId, boardgame_id: boardgameId }});
             const note = boardgame.dataValues.note;
             if(!note) {
-                return res.status(404).json({ message: "Pas de note sur ce jeu" });
+                return res.status(200).json({message: "Pas de note sur ce jeu.", note: null });
             }
-            
             return res.status(200).json({ message: "Lecture de la note", note });
         } catch (error) {
             console.log(error);
-            
             return res.status(401).json({ message: "Echec de la recherche de la note." });
         }
     },
@@ -41,12 +39,13 @@ const libraryController = {
             let boardgame;
 
             if (currentNote !== "") {
-                const boardgameToUpdate = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }});
+                const boardgameToUpdate = await UserBoardgame.findOne({ where: { user_id: userId, boardgame_id: boardgameId }, include: [{ model: Boardgame, as: "boardgame", attributes: ['name']}]});
                 boardgame = await boardgameToUpdate.update({ note : currentNote });
             }
+            const boardgameName = boardgameToUpdate.boardgame.dataValues.name;
             const noteToAdd = boardgame.dataValues.note;
             
-            return res.status(201).json({ message: "Note ajoutée", noteToAdd });
+            return res.status(201).json({ message: `Note ajoutée pour le jeu ${boardgameName}`, noteToAdd });
         } catch (error) {
             console.log(error);
             return res.status(401).json({ message: "Impossible d'ajouter une note"})
@@ -62,7 +61,7 @@ const libraryController = {
             const boardgameName = boardgameToUpdate.boardgame.dataValues.name;
             
             await boardgameToUpdate.update({ note: null});
-            return res.status(201).json(`Suppression de la note pour le jeu ${boardgameName}`);
+            return res.status(201).json({ message: `Suppression de la note pour le jeu ${boardgameName}` });
         } catch (error) {
             console.log(error);
             return res.status(401).json({ message: "Echec de la suppression" });
