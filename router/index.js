@@ -40,5 +40,6 @@ router.put("/note/delete/:id", authController.authorize, noteController.delete);
 
 // CONTACT
 router.post('/forgotPassword', contactController.forgotPassword);
+router.post('/contactAdmin', contactController.contactAdmin);
 
 module.exports = router;

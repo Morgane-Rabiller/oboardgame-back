@@ -1,4 +1,4 @@
-const sendMail = require("../services/contactMail.js");
+const contactMail = require("../services/contactMail.js");
 const { addTokenUser } = require("./authController.js");
 require("dotenv").config();
 const User = require("../models/userModel.js");
@@ -21,7 +21,7 @@ const contactController = {
         const { email } = req.body;
         const currentEmail = sanitizeHtml(email.toLowerCase(), defaultOptionsSanitize);
         try {
-            const user = await User.findOne({ where: { currentEmail } });
+            const user = await User.findOne({ where: { email: currentEmail } });
             
             if(!user) {
                 return res.status(401).json({message: "Adresse mail non valide !"})
@@ -48,7 +48,7 @@ const contactController = {
                 `https://oboardgame.mogo-r.fr/nouveau-mot-de-passe/${tokenGenerated.token}`
             );
             // Envoi du mail
-            await sendMail(email, "Mot de passe oublié", htmlConfirmation);
+            await contactMail.sendMail(email, "Mot de passe oublié", htmlConfirmation);
             return res
                 .status(200)
                 .json({
@@ -60,7 +60,7 @@ const contactController = {
             res.status(401).json({ message: "Adresse mail non correct" });
         }
     },
-
+    
     // Génération d'un token unique pour l'url
     generateUniqueToken: () => {
         const date = new Date();
@@ -71,6 +71,28 @@ const contactController = {
             process.env.HMAC_SECRET
         );
         return { token: hmacHash.toString(), expiration: expirationDate };
+    },
+
+    contactAdmin: async (req, res) => {
+        
+        // Récupération de l'adresse mail de l'utilisateur
+        const { email, object, content } = req.body;
+        const currentEmail = sanitizeHtml(email.toLowerCase(), defaultOptionsSanitize);
+        const currentObject = sanitizeHtml(object, defaultOptionsSanitize);
+        const currentContent = sanitizeHtml(content, defaultOptionsSanitize);
+        try {
+            
+            // Envoi du mail
+            await contactMail.receiveMail(currentEmail, currentObject, currentContent);
+            return res
+                .status(200)
+                .json({
+                    message: "Mail envoyé ✔",
+                });
+        } catch (error) {
+            console.log(error);
+            res.status(401).json({ message: "Erreur lors de l'envoi du mail" });
+        }
     },
 };
 
